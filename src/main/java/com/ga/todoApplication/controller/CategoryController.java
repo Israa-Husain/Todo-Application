@@ -30,4 +30,14 @@ public class CategoryController {
         System.out.println("calling getCategory ==>");
         return categoryService.getCategory(id);
     }
+
+    @PutMapping("/categories/{id}")
+    public Category updateCategory(@PathVariable Long id, @RequestBody Category object){
+        return categoryService.updateCategory(id,object);
+    }
+
+    @DeleteMapping("/categories/{id}")
+    public Category deleteCategory(@PathVariable Long id){
+        return categoryService.deleteCategory(id);
+    }
 }

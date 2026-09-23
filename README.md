@@ -19,7 +19,7 @@ Design Decisions:
 -PostgreSQL/pgAdmin as the database for storing the application data.
 -Created a Category model with id, name, and description.
 -Separated the application into Controller, Service, and Repository. The Controller is the presentation, the Service contains the business logic, and the Repository communicates with the database.
--Used REST endpoints with GET, POST.
+-Used REST endpoints with GET, POST, PUT, DELETE.
 
 Reasons Behind the Decisions:
 -Spring Boot was used because it provides an easy way to configure and run the application.
@@ -32,3 +32,5 @@ GET /hello – Returns a “Hello World!” message.
 GET /api/categories – Retrieves all categories.
 GET /api/categories/{id} – Retrieves a specific category by its id.
 POST /api/categories – Creates a new category.
+PUT /api/categories/{id} - Update a specific category by its id.
+DELETE /api/categories/{id} - Delete a specific category by its id.

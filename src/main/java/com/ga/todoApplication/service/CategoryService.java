@@ -1,7 +1,7 @@
 package com.ga.todoApplication.service;
 
-import com.ga.food.exception.InformationExistException;
-import com.ga.food.exception.InformationNotFoundException;
+import com.ga.todoApplication.exception.InformationExistException;
+import com.ga.todoApplication.exception.InformationNotFoundException;
 import com.ga.todoApplication.model.Category;
 import com.ga.todoApplication.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +34,21 @@ public class CategoryService {
 
     public Category getCategory(Long id){
         return categoryRepository.findById(id).orElseThrow(()->new InformationNotFoundException("category with id "+id+" not found"));
+    }
+
+    public Category updateCategory(Long id, Category categoryObject){
+        System.out.println("service calling updateCategory ==>");
+        Category category = categoryRepository.findById(id).orElseThrow(()-> new InformationNotFoundException("Category with id "+id+" not found"));
+        category.setName(categoryObject.getName());
+        category.setDescription(categoryObject.getDescription());
+        return categoryRepository.save(category);
+    }
+
+    public Category deleteCategory(Long id){
+        System.out.println("service calling deleteCategory ==>");
+        Category category = categoryRepository.findById(id).orElseThrow(()-> new InformationNotFoundException("Category with id "+id+" not found"));
+        categoryRepository.deleteById(id);
+        return category;
     }
 }
 
