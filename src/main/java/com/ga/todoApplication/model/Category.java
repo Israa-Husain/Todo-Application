@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import lombok.*;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Data
 @Entity
@@ -20,5 +22,8 @@ public class Category {
 
     @Column
     private String description;
+
+    @OneToMany(fetch = FetchType.EAGER ,mappedBy = "category", orphanRemoval = true)
+    private List<Item> itemList;
 
 }

@@ -34,3 +34,17 @@ GET /api/categories/{id} – Retrieves a specific category by its id.
 POST /api/categories – Creates a new category.
 PUT /api/categories/{id} - Update a specific category by its id.
 DELETE /api/categories/{id} - Delete a specific category by its id.
+
+step 3B:
+Item model
+-Each item contains name, description, dueDate.
+-created relationship between Category and Item. One Category have many items, and each item belongs to one Category. Using @OneToMany in the Category model and @ManyToOne in the Item model.
+-ItemRepository to communicate with the database and ItemService to handle the item logic. ItemController to handle the CRUD requests for items.
+
+Endpoints:
+GET /api/categories/{categoryId}/items - Retrieves all items belonging to a specific category.
+POST /api/categories/{categoryId}/items - Creates a new item inside a specific category.
+GET /api/categories/{categoryId}/items/{itemId} - Retrieves a specific item from a category.
+PUT /api/categories/{categoryId}/items/{itemId} - Updates a specific item.
+DELETE /api/categories/{categoryId}/items/{itemId} - Deletes a specific item.
+
