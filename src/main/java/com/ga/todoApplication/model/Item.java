@@ -30,5 +30,9 @@ public class Item {
     @JsonIgnore
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 }

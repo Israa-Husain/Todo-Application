@@ -26,4 +26,8 @@ public class Category {
     @OneToMany(fetch = FetchType.EAGER ,mappedBy = "category", orphanRemoval = true)
     private List<Item> itemList;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }
