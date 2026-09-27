@@ -34,7 +34,7 @@ public class ItemService {
 
     public Item getItem(Long categoryId, Long itemId){
         System.out.println("service calling getItem ==>");
-        Item item = itemRepository.findById(categoryId).orElseThrow(()-> new InformationNotFoundException("category with id "+categoryId+" not found"));
+        Item item = itemRepository.findById(itemId).orElseThrow(()-> new InformationNotFoundException("item with id "+itemId+" not found"));
 
         if(!item.getCategory().getId().equals(categoryId)){
             throw new InformationNotFoundException("item not found in this category");
