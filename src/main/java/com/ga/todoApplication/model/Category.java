@@ -1,6 +1,7 @@
 package com.ga.todoApplication.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import jakarta.persistence.*;
 
@@ -26,6 +27,7 @@ public class Category {
     @OneToMany(fetch = FetchType.EAGER ,mappedBy = "category", orphanRemoval = true)
     private List<Item> itemList;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

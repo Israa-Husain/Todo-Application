@@ -3,8 +3,11 @@ package com.ga.todoApplication.service;
 import com.ga.todoApplication.exception.InformationExistException;
 import com.ga.todoApplication.exception.InformationNotFoundException;
 import com.ga.todoApplication.model.Category;
+import com.ga.todoApplication.model.User;
 import com.ga.todoApplication.repository.CategoryRepository;
+import com.ga.todoApplication.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -16,13 +19,20 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @PutMapping("/categories")
+    public static User getCurrentLoggedInUser(){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUser();
+    }
+
+    //@PutMapping("/categories")
     public Category createCategory(Category categoryObject){
         System.out.println("Service calling createCategory ==> ");
-        Category category = categoryRepository.findByName(categoryObject.getName());
+        User currentUser = getCurrentLoggedInUser();
+        Category category = categoryRepository.findByUserIdAndName(currentUser.getId(), categoryObject.getName());
         if(category!=null){
             throw new InformationExistException("category with name "+category.getName() + " already exist.");
         } else {
+            categoryObject.setUser(currentUser);
             return categoryRepository.save(categoryObject);
         }
     }

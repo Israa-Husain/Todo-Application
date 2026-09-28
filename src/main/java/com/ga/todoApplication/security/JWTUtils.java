@@ -24,26 +24,55 @@ public class JWTUtils {
 
     public String generateJwtToken(MyUserDetails myUserDetails) {
         return Jwts.builder()
-                .setSubject((myUserDetails.getUsername()))
+                .setSubject(myUserDetails.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + JwtExpiration))
+                .setExpiration(new Date(new Date().getTime() + JwtExpiration))
                 .signWith(SignatureAlgorithm.HS256, JwtSecret)
                 .compact();
     }
 
-    public String getUserNameFromJwtToken(String token){
-        return Jwts.parserBuilder().setSigningKey(JwtSecret).build().parseClaimsJwt(token).getBody().getSubject();
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(JwtSecret)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 
-    public boolean validateJwtToken(String authToken){
-        try{
-            Jwts.parser().setSigningKey(JwtSecret).parsePlaintextJws(authToken);
+    public boolean validateJwtToken(String authToken) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(JwtSecret)
+                    .build()
+                    .parseClaimsJws(authToken);
+
             return true;
-        } catch (SecurityException e){
-            logger.log(Level.SEVERE,"Invalid JWT Signature: {0}",e.getMessage());
+
+        } catch (Exception e) {
+            logger.log(
+                    Level.SEVERE,
+                    "Invalid JWT Token: {0}",
+                    e.getMessage()
+            );
         }
+
         return false;
     }
+
+//    public String getUserNameFromJwtToken(String token){
+//        return Jwts.parserBuilder().setSigningKey(JwtSecret).build().parseClaimsJwt(token).getBody().getSubject();
+//    }
+//
+//    public boolean validateJwtToken(String authToken){
+//        try{
+//            Jwts.parser().setSigningKey(JwtSecret).parsePlaintextJws(authToken);
+//            return true;
+//        } catch (SecurityException e){
+//            logger.log(Level.SEVERE,"Invalid JWT Signature: {0}",e.getMessage());
+//        }
+//        return false;
+//    }
 
 }
 

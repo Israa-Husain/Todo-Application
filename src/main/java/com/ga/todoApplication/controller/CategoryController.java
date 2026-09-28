@@ -1,8 +1,11 @@
 package com.ga.todoApplication.controller;
 
 import com.ga.todoApplication.model.Category;
+import com.ga.todoApplication.model.User;
+import com.ga.todoApplication.security.MyUserDetails;
 import com.ga.todoApplication.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
